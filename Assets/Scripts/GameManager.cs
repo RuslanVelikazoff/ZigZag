@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
@@ -61,7 +59,15 @@ public class GameManager : MonoBehaviour
         {
             if(Input.GetMouseButtonDown(0))
             {
-                UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+                UnityEngine.SceneManagement.SceneManager.LoadScene(1);
+            }
+
+            if (Input.touches.Length > 0)
+            {
+                if (Input.touches[0].phase == TouchPhase.Began)
+                {
+                    UnityEngine.SceneManagement.SceneManager.LoadScene(1);
+                }
             }
             return;
         }
@@ -75,13 +81,35 @@ public class GameManager : MonoBehaviour
                 player.GetComponent<Rigidbody>().velocity = Vector3.right * speed;
                 BlockSpawn();
             }
+            if (Input.touches.Length > 0)
+            {
+                if (Input.touches[0].phase == TouchPhase.Began)
+                {
+                    hasGameStarted = true;
+                    startPanel.SetActive(false);
+                    player.GetComponent<Rigidbody>().velocity = Vector3.right * speed;
+                    BlockSpawn();
+                }
+            }
             return;
         }
 
         if(Input.GetMouseButtonDown(0))
         {
+            AudioManager.instance.Play("Click");
+
             player.GetComponent<Rigidbody>().velocity = (isMovingForward ? Vector3.back : Vector3.right) *speed;
             isMovingForward = !isMovingForward;
+        }
+        if (Input.touches.Length > 0)
+        {
+            if (Input.touches[0].phase == TouchPhase.Began)
+            {
+                AudioManager.instance.Play("Click");
+
+                player.GetComponent<Rigidbody>().velocity = (isMovingForward ? Vector3.back : Vector3.right) * speed;
+                isMovingForward = !isMovingForward;
+            }
         }
     }
 
@@ -105,6 +133,8 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
+        AudioManager.instance.Play("Lose");
+
         hasGameFinished = true;
         startPanel.SetActive(true);
 
@@ -120,6 +150,11 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.SetInt("Games", games);
 
         CancelInvoke("SpawnPlatform");
+    }
+
+    public void CloseLevel()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
     }
 
     void SpawnPlatform()

@@ -1,19 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-
     bool hasGameFinished;
 
-    // Start is called before the first frame update
     void Start()
     {
         hasGameFinished = false;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if(!Physics.Raycast(transform.position,Vector3.down,2f))
@@ -34,6 +29,8 @@ public class Player : MonoBehaviour
     {
         if(other.CompareTag("Diamond"))
         {
+            AudioManager.instance.Play("Diamond");
+
             GameManager.instance.UpdateDiamond();
             Destroy(other.gameObject);
         }
