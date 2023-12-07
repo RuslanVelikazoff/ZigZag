@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sounds:
   - name: Theme
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 4eb562e14b6724754bd3adc310ef7129, type: 3}
     volume: 0
     loop: 1
     source: {fileID: 0}
@@ -56,7 +56,7 @@ MonoBehaviour:
     loop: 0
     source: {fileID: 0}
   - name: Lose
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 6c0fb685488564361aaf75282997ab2a, type: 3}
     volume: 0
     loop: 0
     source: {fileID: 0}
